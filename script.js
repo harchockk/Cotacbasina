@@ -117,29 +117,63 @@ img.src ="public/images.jpg";
 // };
 
 
-// img.onload = () =>{
-//     ctx.save();
 
-//     ctx.beginPath();
-//     ctx.arc(150,150,60,0,Math.PI *2);
-//     ctx.clip();
+// let a = 0;
 
-//     ctx.drawImage(img,90,90,120,120);
+// img.onload = () => {
+//     function animate() {
+//         ctx.clearRect(0, 0, canvas.width, canvas.height);
+//         ctx.drawImage(img, a, 100, 80, 80);
+//         a += 2;
+//         if(a > canvas.width){ a = -80};
+//         requestAnimationFrame(animate);
+//     }
+//     animate();
+// };
 
-//     ctx.restore();
-// }
+// ctx.shadowColor = "rgba(0,0,0,0.35)";
+// ctx.shadowBlur = 12;
+// ctx.shadowOffsetX = 8;
+// ctx.shadowOffsetY = 8;
+
+// ctx.filllStyle = "rgb(0,200,0)";
+// ctx.fillRect(60,60,160,100);
 
 
-let a = 0;
 
-img.onload = () => {
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(img, a, 100, 80, 80);
-        a += 2;
-        if(a > canvas.width){ a = -80};
-        requestAnimationFrame(animate);
-    }
-    animate();
-};
 
+ctx.shadowColor = "rgba(150,20,30,0.4)";
+ctx.shadowBlur = 8;
+ctx.shadowOffsetX = 4;
+ctx.shadowOffsetY = 4;
+
+ctx.lineWidth = 8;
+ctx.strokeStyle = "rgba(0,100,100,0.4)";
+
+
+ctx.beginPath();
+ctx.moveTo(50,200);
+ctx.lineTo(250,200);
+ctx.stroke();
+
+
+// э/Ж,ЛО
+
+
+const imageData = ctx.getImageData(0,0,canvas.clientWidth, canvas.height);
+const data = imageData.data;
+
+for(let i =0; i<data.length;i+=4) {
+    const r = data[i];
+    const g = data[i+1];
+    const b = data[i+2];
+
+    const gray = (r+g+b)/3;
+
+    data[i] = gray;
+    data[i+1] = gray;
+    data[i+2] = gray;
+}
+
+
+ctx.putImageData(imageData,0,0);
